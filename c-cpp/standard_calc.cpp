@@ -13,7 +13,10 @@
  * @return float: The bounded angle in degrees.
  */
 float bound_to_180(float angle) {
-    return 0;
+	if (180 > angle && -180 <= angle) {
+		return angle;
+	}
+	return 0;
 }
 
 /**
