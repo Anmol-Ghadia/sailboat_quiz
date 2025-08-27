@@ -46,5 +46,30 @@ float bound_to_180(float angle) {
  * @return bool: TRUE when `middle_angle` is not in the reflex angle of `first_angle` and `second_angle`, FALSE otherwise
  */
 bool is_angle_between(float first_angle, float middle_angle, float second_angle) {
-    return true;
+	// normalize to [0, 360)
+	float first_angle_360 = to_360(first_angle);
+	float middle_angle_360 = to_360(middle_angle);
+	float second_angle_360 = to_360(second_angle);
+
+	// normalize to get angle_a <= angle_b
+	float angle_a = second_angle_360;
+	float angle_b = first_angle_360;
+	if (first_angle_360 <= second_angle_360) {
+		angle_a = first_angle_360;
+		angle_b = second_angle_360;
+	}
+
+	// find reflex region
+	float angle_between_a_and_b = angle_b - angle_a;
+	bool is_middle_angle_between_a_and_b  = angle_a <= middle_angle_360 
+							&& middle_angle_360 <= angle_b;
+	if (angle_between_a_and_b == 180) {
+		return true;
+	} else if (angle_between_a_and_b > 180) { // a -> b area is reflex
+		// implicitly, angle_between_a_and_b will always be less than 360
+		// since, we normalized at the start
+		return !is_middle_angle_between_a_and_b;
+	} else {
+		return is_middle_angle_between_a_and_b;
+	}
 }

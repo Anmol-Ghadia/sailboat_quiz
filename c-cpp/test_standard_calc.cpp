@@ -37,6 +37,36 @@ void test_bound_basic1(CuTest *tc) {
 /**************** Tests for is_angle_between() *******************/
 void test_between_basic1(CuTest *tc) {
     CuAssertTrue(tc, is_angle_between(0, 1, 2));
+
+    CuAssertTrue(tc, is_angle_between(0, 45, 90));
+    CuAssertTrue(tc, !is_angle_between(45, 90, 270));
+
+    CuAssertTrue(tc, is_angle_between(350, 0, 10));
+    CuAssertTrue(tc, is_angle_between(350, 5, 20));
+    CuAssertTrue(tc, !is_angle_between(350, 30, 20));
+    CuAssertTrue(tc, is_angle_between(90, 180, 270));
+    CuAssertTrue(tc, is_angle_between(270, 180, 90));
+
+    CuAssertTrue(tc, is_angle_between(0, 0, 90));
+    CuAssertTrue(tc, is_angle_between(0, 90, 90));
+    CuAssertTrue(tc, is_angle_between(90, 0, 0));
+
+    CuAssertTrue(tc, is_angle_between(350, 0, 10));
+    CuAssertTrue(tc, !is_angle_between(10, 350, 20));
+    CuAssertTrue(tc, is_angle_between(270, 315, 0));
+    CuAssertTrue(tc, !is_angle_between(315, 270, 0));
+
+    CuAssertTrue(tc, !is_angle_between(90, 180, 90));
+    CuAssertTrue(tc, !is_angle_between(0, 180, 0));
+
+    CuAssertTrue(tc, is_angle_between(359.9, 0.1, 1.0));
+    CuAssertTrue(tc, !is_angle_between(1.0, 359.0, 2.0));
+    CuAssertTrue(tc, is_angle_between(10.000001, 10.000002, 10.000003));
+    CuAssertTrue(tc, is_angle_between(10.000003, 10.000002, 10.000001));
+    CuAssertTrue(tc, is_angle_between(-10.0, 0.0, 10.0));
+    CuAssertTrue(tc, is_angle_between(350.0, 0.0, 370.0));
+    CuAssertTrue(tc, is_angle_between(10.0, 0.0, -10.0));
+
 }
 
 int main(int argc, char const *argv[]) {
