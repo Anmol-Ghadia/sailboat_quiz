@@ -2,7 +2,19 @@
 #include "standard_calc.h"
 
 /**
- * @brief Bounds the provided angle between [-180, 180) degrees.
+ * Maps the given angle to the range [0,360)
+ */
+float to_360(float angle) {
+	if (angle >= 0) {	// positive
+		int factor = (int) angle / 360;
+		return angle - (factor * 360);
+	} else {		// negative number
+		int factor = ((int) angle * -1) / 360;
+		return angle + ((factor+1) * 360);
+	}
+}
+
+/** * @brief Bounds the provided angle between [-180, 180) degrees.
  *
  * e.g.)
  *      bound_to_180(135) = 135.0
@@ -13,10 +25,12 @@
  * @return float: The bounded angle in degrees.
  */
 float bound_to_180(float angle) {
-	if (180 > angle && -180 <= angle) {
-		return angle;
+	float val_360 = to_360(angle);
+	if (val_360 >= 180) {
+		return val_360-360;
+	} else {
+		return val_360;
 	}
-	return 0;
 }
 
 /**
